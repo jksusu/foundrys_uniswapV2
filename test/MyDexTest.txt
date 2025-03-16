@@ -1,0 +1,152 @@
+No files changed, compilation skipped
+
+Ran 2 tests for test/MyDexTest.t.sol:MyDexTest
+[PASS] testSwapETHForRNT() (gas: 146602)
+Logs:
+  0x40b98066216315bbdfe8a538e17a014b2d33ad2f82c18b3a89ece2ac434ac137
+  uniswapFatoryAddress: 0x88F59F8826af5e695B13cA934d6c7999875A9EeA
+  wethAddress: 0xCeF98e10D1e80378A9A74Ce074132B66CDD5e88d
+  uniswapRouterAddress: 0x72cC13426cAfD2375FFABE56498437927805d3d2
+  rntTokenAddress: 0x98B3c60ADE6A87b229Aa7d91ad27c227d54d95C0
+  myDexAddress: 0xe95fEFbaa79748B66DEfb3D662A12541e4d5Cdc8
+  PAIR: 0xDC047457Ac7936e1E6647ff9ccd6AEbA2CeC8634
+  amountToken: 1000000000000000000
+  amountETH: 100000000000000000000
+  liquidity: 9999999999999999000
+  reserve0: 1000000000000000000
+  reserve1: 100000000000000000000
+  initPrice: 100000000000000000
+  user1Address rnt balance: 9871580343970612
+  user1Address eth balance: 0
+
+Traces:
+  [169302] MyDexTest::testSwapETHForRNT()
+    ├─ [0] VM::startPrank(user1Address: [0x70dB0807521f17ab0fE5Dd8045ba10e3044fA571])
+    │   └─ ← [Return] 
+    ├─ [0] VM::deal(user1Address: [0x70dB0807521f17ab0fE5Dd8045ba10e3044fA571], 1000000000000000000 [1e18])
+    │   └─ ← [Return] 
+    ├─ [0] VM::assertEq(1000000000000000000 [1e18], 1000000000000000000 [1e18]) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [140078] MyDex::swapETHForRNT{value: 1000000000000000000}()
+    │   ├─ [418] UniswapV2Router::WETH() [staticcall]
+    │   │   └─ ← [Return] WETH: [0xCeF98e10D1e80378A9A74Ce074132B66CDD5e88d]
+    │   ├─ [126327] UniswapV2Router::swapExactETHForTokens{value: 1000000000000000000}(0, [0xCeF98e10D1e80378A9A74Ce074132B66CDD5e88d, 0x98B3c60ADE6A87b229Aa7d91ad27c227d54d95C0], user1Address: [0x70dB0807521f17ab0fE5Dd8045ba10e3044fA571], 1742112340 [1.742e9])
+    │   │   ├─ [3149] UniswapV2Pair::getReserves() [staticcall]
+    │   │   │   └─ ← [Return] 1000000000000000000 [1e18], 100000000000000000000 [1e20], 1742111340 [1.742e9]
+    │   │   ├─ [24174] WETH::deposit{value: 1000000000000000000}()
+    │   │   │   ├─ emit Deposit(dst: UniswapV2Router: [0x72cC13426cAfD2375FFABE56498437927805d3d2], wad: 1000000000000000000 [1e18])
+    │   │   │   └─ ← [Stop] 
+    │   │   ├─ [8956] WETH::transfer(UniswapV2Pair: [0xDC047457Ac7936e1E6647ff9ccd6AEbA2CeC8634], 1000000000000000000 [1e18])
+    │   │   │   ├─ emit Transfer(from: UniswapV2Router: [0x72cC13426cAfD2375FFABE56498437927805d3d2], to: UniswapV2Pair: [0xDC047457Ac7936e1E6647ff9ccd6AEbA2CeC8634], value: 1000000000000000000 [1e18])
+    │   │   │   └─ ← [Return] true
+    │   │   ├─ [61061] UniswapV2Pair::swap(9871580343970612 [9.871e15], 0, user1Address: [0x70dB0807521f17ab0fE5Dd8045ba10e3044fA571], 0x)
+    │   │   │   ├─ [30545] RntToken::transfer(user1Address: [0x70dB0807521f17ab0fE5Dd8045ba10e3044fA571], 9871580343970612 [9.871e15])
+    │   │   │   │   ├─ emit Transfer(from: UniswapV2Pair: [0xDC047457Ac7936e1E6647ff9ccd6AEbA2CeC8634], to: user1Address: [0x70dB0807521f17ab0fE5Dd8045ba10e3044fA571], value: 9871580343970612 [9.871e15])
+    │   │   │   │   └─ ← [Return] true
+    │   │   │   ├─ [828] RntToken::balanceOf(UniswapV2Pair: [0xDC047457Ac7936e1E6647ff9ccd6AEbA2CeC8634]) [staticcall]
+    │   │   │   │   └─ ← [Return] 990128419656029388 [9.901e17]
+    │   │   │   ├─ [824] WETH::balanceOf(UniswapV2Pair: [0xDC047457Ac7936e1E6647ff9ccd6AEbA2CeC8634]) [staticcall]
+    │   │   │   │   └─ ← [Return] 101000000000000000000 [1.01e20]
+    │   │   │   ├─ emit Sync(reserve0: 990128419656029388 [9.901e17], reserve1: 101000000000000000000 [1.01e20])
+    │   │   │   ├─ emit Swap(sender: UniswapV2Router: [0x72cC13426cAfD2375FFABE56498437927805d3d2], amount0In: 0, amount1In: 1000000000000000000 [1e18], amount0Out: 9871580343970612 [9.871e15], amount1Out: 0, to: user1Address: [0x70dB0807521f17ab0fE5Dd8045ba10e3044fA571])
+    │   │   │   └─ ← [Stop] 
+    │   │   └─ ← [Return] [1000000000000000000 [1e18], 9871580343970612 [9.871e15]]
+    │   └─ ← [Stop] 
+    ├─ [828] RntToken::balanceOf(user1Address: [0x70dB0807521f17ab0fE5Dd8045ba10e3044fA571]) [staticcall]
+    │   └─ ← [Return] 9871580343970612 [9.871e15]
+    ├─ [828] RntToken::balanceOf(user1Address: [0x70dB0807521f17ab0fE5Dd8045ba10e3044fA571]) [staticcall]
+    │   └─ ← [Return] 9871580343970612 [9.871e15]
+    ├─ [0] console::log("user1Address rnt balance:", 9871580343970612 [9.871e15]) [staticcall]
+    │   └─ ← [Stop] 
+    ├─ [0] console::log("user1Address eth balance:", 0) [staticcall]
+    │   └─ ← [Stop] 
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] testSwapRNTForETH() (gas: 207785)
+Logs:
+  0x40b98066216315bbdfe8a538e17a014b2d33ad2f82c18b3a89ece2ac434ac137
+  uniswapFatoryAddress: 0x88F59F8826af5e695B13cA934d6c7999875A9EeA
+  wethAddress: 0xCeF98e10D1e80378A9A74Ce074132B66CDD5e88d
+  uniswapRouterAddress: 0x72cC13426cAfD2375FFABE56498437927805d3d2
+  rntTokenAddress: 0x98B3c60ADE6A87b229Aa7d91ad27c227d54d95C0
+  myDexAddress: 0xe95fEFbaa79748B66DEfb3D662A12541e4d5Cdc8
+  PAIR: 0xDC047457Ac7936e1E6647ff9ccd6AEbA2CeC8634
+  amountToken: 1000000000000000000
+  amountETH: 100000000000000000000
+  liquidity: 9999999999999999000
+  reserve0: 1000000000000000000
+  reserve1: 100000000000000000000
+  initPrice: 100000000000000000
+  user2Address rnt balance: 10000000000
+  user2Address rnt balance: 0
+  user2Address eth balance: 996999990059
+
+Traces:
+  [264997] MyDexTest::testSwapRNTForETH()
+    ├─ [0] VM::startPrank(user2Address: [0x2e35f5fF7930aD90F1e2335DDcE4C72De5Af237E])
+    │   └─ ← [Return] 
+    ├─ [2828] RntToken::balanceOf(user2Address: [0x2e35f5fF7930aD90F1e2335DDcE4C72De5Af237E]) [staticcall]
+    │   └─ ← [Return] 10000000000 [1e10]
+    ├─ [828] RntToken::balanceOf(user2Address: [0x2e35f5fF7930aD90F1e2335DDcE4C72De5Af237E]) [staticcall]
+    │   └─ ← [Return] 10000000000 [1e10]
+    ├─ [0] console::log("user2Address rnt balance:", 10000000000 [1e10]) [staticcall]
+    │   └─ ← [Stop] 
+    ├─ [828] RntToken::balanceOf(user2Address: [0x2e35f5fF7930aD90F1e2335DDcE4C72De5Af237E]) [staticcall]
+    │   └─ ← [Return] 10000000000 [1e10]
+    ├─ [25296] RntToken::approve(MyDex: [0xe95fEFbaa79748B66DEfb3D662A12541e4d5Cdc8], 10000000000 [1e10])
+    │   ├─ emit Approval(owner: user2Address: [0x2e35f5fF7930aD90F1e2335DDcE4C72De5Af237E], spender: MyDex: [0xe95fEFbaa79748B66DEfb3D662A12541e4d5Cdc8], value: 10000000000 [1e10])
+    │   └─ ← [Return] true
+    ├─ [828] RntToken::balanceOf(user2Address: [0x2e35f5fF7930aD90F1e2335DDcE4C72De5Af237E]) [staticcall]
+    │   └─ ← [Return] 10000000000 [1e10]
+    ├─ [204755] MyDex::swapRNTForETH(10000000000 [1e10])
+    │   ├─ [29614] RntToken::transferFrom(user2Address: [0x2e35f5fF7930aD90F1e2335DDcE4C72De5Af237E], MyDex: [0xe95fEFbaa79748B66DEfb3D662A12541e4d5Cdc8], 10000000000 [1e10])
+    │   │   ├─ emit Transfer(from: user2Address: [0x2e35f5fF7930aD90F1e2335DDcE4C72De5Af237E], to: MyDex: [0xe95fEFbaa79748B66DEfb3D662A12541e4d5Cdc8], value: 10000000000 [1e10])
+    │   │   └─ ← [Return] true
+    │   ├─ [418] UniswapV2Router::WETH() [staticcall]
+    │   │   └─ ← [Return] WETH: [0xCeF98e10D1e80378A9A74Ce074132B66CDD5e88d]
+    │   ├─ [25296] RntToken::approve(UniswapV2Router: [0x72cC13426cAfD2375FFABE56498437927805d3d2], 10000000000 [1e10])
+    │   │   ├─ emit Approval(owner: MyDex: [0xe95fEFbaa79748B66DEfb3D662A12541e4d5Cdc8], spender: UniswapV2Router: [0x72cC13426cAfD2375FFABE56498437927805d3d2], value: 10000000000 [1e10])
+    │   │   └─ ← [Return] true
+    │   ├─ [140725] UniswapV2Router::swapExactTokensForETH(10000000000 [1e10], 0, [0x98B3c60ADE6A87b229Aa7d91ad27c227d54d95C0, 0xCeF98e10D1e80378A9A74Ce074132B66CDD5e88d], user2Address: [0x2e35f5fF7930aD90F1e2335DDcE4C72De5Af237E], 1742112340 [1.742e9])
+    │   │   ├─ [3149] UniswapV2Pair::getReserves() [staticcall]
+    │   │   │   └─ ← [Return] 1000000000000000000 [1e18], 100000000000000000000 [1e20], 1742111340 [1.742e9]
+    │   │   ├─ [9714] RntToken::transferFrom(MyDex: [0xe95fEFbaa79748B66DEfb3D662A12541e4d5Cdc8], UniswapV2Pair: [0xDC047457Ac7936e1E6647ff9ccd6AEbA2CeC8634], 10000000000 [1e10])
+    │   │   │   ├─ emit Transfer(from: MyDex: [0xe95fEFbaa79748B66DEfb3D662A12541e4d5Cdc8], to: UniswapV2Pair: [0xDC047457Ac7936e1E6647ff9ccd6AEbA2CeC8634], value: 10000000000 [1e10])
+    │   │   │   └─ ← [Return] true
+    │   │   ├─ [61372] UniswapV2Pair::swap(0, 996999990059 [9.969e11], UniswapV2Router: [0x72cC13426cAfD2375FFABE56498437927805d3d2], 0x)
+    │   │   │   ├─ [30856] WETH::transfer(UniswapV2Router: [0x72cC13426cAfD2375FFABE56498437927805d3d2], 996999990059 [9.969e11])
+    │   │   │   │   ├─ emit Transfer(from: UniswapV2Pair: [0xDC047457Ac7936e1E6647ff9ccd6AEbA2CeC8634], to: UniswapV2Router: [0x72cC13426cAfD2375FFABE56498437927805d3d2], value: 996999990059 [9.969e11])
+    │   │   │   │   └─ ← [Return] true
+    │   │   │   ├─ [828] RntToken::balanceOf(UniswapV2Pair: [0xDC047457Ac7936e1E6647ff9ccd6AEbA2CeC8634]) [staticcall]
+    │   │   │   │   └─ ← [Return] 1000000010000000000 [1e18]
+    │   │   │   ├─ [824] WETH::balanceOf(UniswapV2Pair: [0xDC047457Ac7936e1E6647ff9ccd6AEbA2CeC8634]) [staticcall]
+    │   │   │   │   └─ ← [Return] 99999999003000009941 [9.999e19]
+    │   │   │   ├─ emit Sync(reserve0: 1000000010000000000 [1e18], reserve1: 99999999003000009941 [9.999e19])
+    │   │   │   ├─ emit Swap(sender: UniswapV2Router: [0x72cC13426cAfD2375FFABE56498437927805d3d2], amount0In: 10000000000 [1e10], amount1In: 0, amount0Out: 0, amount1Out: 996999990059 [9.969e11], to: UniswapV2Router: [0x72cC13426cAfD2375FFABE56498437927805d3d2])
+    │   │   │   └─ ← [Stop] 
+    │   │   ├─ [9964] WETH::withdraw(996999990059 [9.969e11])
+    │   │   │   ├─ [89] UniswapV2Router::receive{value: 996999990059}()
+    │   │   │   │   └─ ← [Stop] 
+    │   │   │   ├─ emit Withdrawal(src: UniswapV2Router: [0x72cC13426cAfD2375FFABE56498437927805d3d2], wad: 996999990059 [9.969e11])
+    │   │   │   └─ ← [Stop] 
+    │   │   ├─ [0] user2Address::fallback{value: 996999990059}()
+    │   │   │   └─ ← [Stop] 
+    │   │   └─ ← [Return] [10000000000 [1e10], 996999990059 [9.969e11]]
+    │   └─ ← [Stop] 
+    ├─ [828] RntToken::balanceOf(user2Address: [0x2e35f5fF7930aD90F1e2335DDcE4C72De5Af237E]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [828] RntToken::balanceOf(user2Address: [0x2e35f5fF7930aD90F1e2335DDcE4C72De5Af237E]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] console::log("user2Address rnt balance:", 0) [staticcall]
+    │   └─ ← [Stop] 
+    ├─ [0] console::log("user2Address eth balance:", 996999990059 [9.969e11]) [staticcall]
+    │   └─ ← [Stop] 
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 5.64ms (1.04ms CPU time)
+
+Ran 1 test suite in 147.68ms (5.64ms CPU time): 2 tests passed, 0 failed, 0 skipped (2 total tests)
