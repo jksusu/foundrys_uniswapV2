@@ -54,13 +54,34 @@ contract MyDex {
         path[1] = uniswapRouter.WETH();
         //当前合约授权给 router
         rntToken.approve(address(uniswapRouter), rntAmount);
-        
+
         uniswapRouter.swapExactTokensForETH(
             rntAmount,
             0,
             path,
             msg.sender,
             block.timestamp + 1000
+        );
+    }
+
+    function removeLiquidityETH(
+        uint256 liquidity,
+        uint256 amountTokenMin,
+        uint256 amountETHMin,
+        address to,
+        uint256 deadline
+    ) external returns (uint256 amountToken, uint256 amountETH){
+        address pair = UniswapV2Library.pairFor(address(uniswapFactory), address(rntToken), address(weth));
+        IERC20(pair).transferFrom(msg.sender, address(this), liquidity);
+        IERC20(pair).approve(address(uniswapRouter), liquidity);
+       
+       return uniswapRouter.removeLiquidityETH(
+            address(rntToken),
+            liquidity,
+            amountTokenMin,
+            amountETHMin,
+            to,
+            deadline
         );
     }
 }

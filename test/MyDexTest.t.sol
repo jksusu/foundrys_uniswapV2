@@ -153,4 +153,23 @@ contract MyDexTest is Test {
         console.log("user2Address eth balance:", address(user2Address).balance);
         vm.stopPrank();
     }
+
+    function testRemoveLiquidityETHViaDex() public {
+        vm.startPrank(lpAddress);
+        
+        uint256 liquidity = UniswapV2Pair(PAIR).balanceOf(lpAddress);
+        console.log("liquidity balance:", liquidity);
+        assert(liquidity > 0);
+        
+        UniswapV2Pair(PAIR).approve(address(myDex), liquidity);
+
+        (uint256 amountToken, uint256 amountETH) = myDex.removeLiquidityETH(liquidity, 0, 0, lpAddress, block.timestamp + 1000);
+        console.log("amountToken:", amountToken);
+        console.log("amountETH:", amountETH);
+
+        //检查 lp流动性余额是否为 0
+        assertEq(UniswapV2Pair(PAIR).balanceOf(lpAddress), 0);
+        
+        vm.stopPrank();
+    }
 }
