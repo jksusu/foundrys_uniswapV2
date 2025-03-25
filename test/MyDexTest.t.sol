@@ -28,7 +28,7 @@ contract MyDexTest is Test {
     RntToken rntToken;
     MyDex myDex;
 
-    address PAIR;//交易对
+    address PAIR; //交易对
 
     uint256 RntAmount = 1000000000000000000;
     uint256 EthAmount = 100 ether;
@@ -73,7 +73,7 @@ contract MyDexTest is Test {
         vm.deal(liquidityUser1, EthAmount);
         assertEq(address(liquidityUser1).balance, EthAmount);
         // 给发送者添加 rnt代币
-        rntToken.transfer(liquidityUser1, RntAmount );
+        rntToken.transfer(liquidityUser1, RntAmount);
         rntToken.transfer(user2Address, 10000000000);
         assertEq(rntToken.balanceOf(liquidityUser1), RntAmount);
 
@@ -86,7 +86,7 @@ contract MyDexTest is Test {
     //测试流动性添加
     function addLiquidity() public {
         vm.startPrank(liquidityUser1);
-        
+
         //创建交易对
         PAIR = myDex.createEthPair(address(rntToken));
         console.log("PAIR:", PAIR);
@@ -156,20 +156,21 @@ contract MyDexTest is Test {
 
     function testRemoveLiquidityETHViaDex() public {
         vm.startPrank(lpAddress);
-        
+
         uint256 liquidity = UniswapV2Pair(PAIR).balanceOf(lpAddress);
         console.log("liquidity balance:", liquidity);
         assert(liquidity > 0);
-        
+
         UniswapV2Pair(PAIR).approve(address(myDex), liquidity);
 
-        (uint256 amountToken, uint256 amountETH) = myDex.removeLiquidityETH(liquidity, 0, 0, lpAddress, block.timestamp + 1000);
+        (uint256 amountToken, uint256 amountETH) =
+            myDex.removeLiquidityETH(liquidity, 0, 0, lpAddress, block.timestamp + 1000);
         console.log("amountToken:", amountToken);
         console.log("amountETH:", amountETH);
 
         //检查 lp流动性余额是否为 0
         assertEq(UniswapV2Pair(PAIR).balanceOf(lpAddress), 0);
-        
+
         vm.stopPrank();
     }
 }

@@ -1,0 +1,63 @@
+No files changed, compilation skipped
+
+Ran 1 test for test/FlashSwapArbitrageTest.t.sol:FlashSwapArbitrageTest
+[PASS] testStartArbitrage() (gas: 91076)
+Logs:
+  0x40b98066216315bbdfe8a538e17a014b2d33ad2f82c18b3a89ece2ac434ac137
+  wethAddress: 0x88F59F8826af5e695B13cA934d6c7999875A9EeA
+  uniswapFatoryAddress: 0xCeF98e10D1e80378A9A74Ce074132B66CDD5e88d
+  uniswapRouterAddress: 0x72cC13426cAfD2375FFABE56498437927805d3d2
+  A: 0x98B3c60ADE6A87b229Aa7d91ad27c227d54d95C0
+  B: 0xe95fEFbaa79748B66DEfb3D662A12541e4d5Cdc8
+  flashSwapArbitrageAddress: 0x0a6dA0C3010c30cBBbA9dFaF6868583D180818e7
+  liquidityUser1: 10000000000000000000000
+  APair: 0xF4528bC5277add6A647C2fd01F25ba515C9b9896
+  BPair: 0xA87F3b180A96b372Ccd9566e512976e72Dcd0e10
+  ABPair: 0x7e493718cE667dB3fe6e67B91a06194F08aA9480
+  A/ETH Pool Reserves: 100000000000000000000 10000000000
+  B/ETH Pool Reserves: 100000000000000000000 10000000000
+  A/B Pool Reserves: 100000000 100000000
+
+Traces:
+  [93876] FlashSwapArbitrageTest::testStartArbitrage()
+    ├─ [0] VM::startPrank(owner: [0x7c8999dC9a822c1f0Df42023113EDB4FDd543266])
+    │   └─ ← [Return] 
+    ├─ [80370] FlashSwapArbitrage::startArbitrage(ERC20TOKEN: [0x98B3c60ADE6A87b229Aa7d91ad27c227d54d95C0], 100, 0)
+    │   ├─ [2620] UniswapV2Pair::token0() [staticcall]
+    │   │   └─ ← [Return] WETH: [0x88F59F8826af5e695B13cA934d6c7999875A9EeA]
+    │   ├─ [2552] UniswapV2Pair::token1() [staticcall]
+    │   │   └─ ← [Return] ERC20TOKEN: [0x98B3c60ADE6A87b229Aa7d91ad27c227d54d95C0]
+    │   ├─ [620] UniswapV2Pair::token0() [staticcall]
+    │   │   └─ ← [Return] WETH: [0x88F59F8826af5e695B13cA934d6c7999875A9EeA]
+    │   ├─ [552] UniswapV2Pair::token1() [staticcall]
+    │   │   └─ ← [Return] ERC20TOKEN: [0x98B3c60ADE6A87b229Aa7d91ad27c227d54d95C0]
+    │   ├─ [60025] UniswapV2Pair::swap(0, 100, FlashSwapArbitrage: [0x0a6dA0C3010c30cBBbA9dFaF6868583D180818e7], 0x00000000000000000000000098b3c60ade6a87b229aa7d91ad27c227d54d95c000000000000000000000000000000000000000000000000000000000000000640000000000000000000000000000000000000000000000000000000000000000)
+    │   │   ├─ [13445] ERC20TOKEN::transfer(FlashSwapArbitrage: [0x0a6dA0C3010c30cBBbA9dFaF6868583D180818e7], 100)
+    │   │   │   ├─ emit Transfer(from: UniswapV2Pair: [0xF4528bC5277add6A647C2fd01F25ba515C9b9896], to: FlashSwapArbitrage: [0x0a6dA0C3010c30cBBbA9dFaF6868583D180818e7], value: 100)
+    │   │   │   └─ ← [Return] true
+    │   │   ├─ [12516] FlashSwapArbitrage::uniswapV2Call(FlashSwapArbitrage: [0x0a6dA0C3010c30cBBbA9dFaF6868583D180818e7], 0, 100, 0x00000000000000000000000098b3c60ade6a87b229aa7d91ad27c227d54d95c000000000000000000000000000000000000000000000000000000000000000640000000000000000000000000000000000000000000000000000000000000000)
+    │   │   │   ├─ [1149] UniswapV2Pair::getReserves() [staticcall]
+    │   │   │   │   └─ ← [Return] 100000000000000000000 [1e20], 10000000000 [1e10], 1742884884 [1.742e9]
+    │   │   │   ├─ [620] UniswapV2Pair::token0() [staticcall]
+    │   │   │   │   └─ ← [Return] WETH: [0x88F59F8826af5e695B13cA934d6c7999875A9EeA]
+    │   │   │   ├─ [620] UniswapV2Pair::token0() [staticcall]
+    │   │   │   │   └─ ← [Return] WETH: [0x88F59F8826af5e695B13cA934d6c7999875A9EeA]
+    │   │   │   ├─ [3845] ERC20TOKEN::transfer(UniswapV2Pair: [0xF4528bC5277add6A647C2fd01F25ba515C9b9896], 996999990059 [9.969e11])
+    │   │   │   │   ├─ emit Transfer(from: FlashSwapArbitrage: [0x0a6dA0C3010c30cBBbA9dFaF6868583D180818e7], to: UniswapV2Pair: [0xF4528bC5277add6A647C2fd01F25ba515C9b9896], value: 996999990059 [9.969e11])
+    │   │   │   │   └─ ← [Return] true
+    │   │   │   └─ ← [Stop] 
+    │   │   ├─ [2824] WETH::balanceOf(UniswapV2Pair: [0xF4528bC5277add6A647C2fd01F25ba515C9b9896]) [staticcall]
+    │   │   │   └─ ← [Return] 100000000000000000000 [1e20]
+    │   │   ├─ [828] ERC20TOKEN::balanceOf(UniswapV2Pair: [0xF4528bC5277add6A647C2fd01F25ba515C9b9896]) [staticcall]
+    │   │   │   └─ ← [Return] 1006999989959 [1.006e12]
+    │   │   ├─ emit Sync(reserve0: 100000000000000000000 [1e20], reserve1: 1006999989959 [1.006e12])
+    │   │   ├─ emit Swap(sender: FlashSwapArbitrage: [0x0a6dA0C3010c30cBBbA9dFaF6868583D180818e7], amount0In: 0, amount1In: 996999990059 [9.969e11], amount0Out: 0, amount1Out: 100, to: FlashSwapArbitrage: [0x0a6dA0C3010c30cBBbA9dFaF6868583D180818e7])
+    │   │   └─ ← [Stop] 
+    │   └─ ← [Stop] 
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 4.16ms (161.13µs CPU time)
+
+Ran 1 test suite in 139.10ms (4.16ms CPU time): 1 tests passed, 0 failed, 0 skipped (1 total tests)

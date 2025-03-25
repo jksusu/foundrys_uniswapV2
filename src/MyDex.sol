@@ -13,12 +13,7 @@ contract MyDex {
     IWETH public immutable weth;
     IERC20 public immutable rntToken;
 
-    constructor(
-        address factory,
-        address router,
-        address _weth,
-        address _rntToken
-    ) {
+    constructor(address factory, address router, address _weth, address _rntToken) {
         uniswapRouter = IUniswapV2Router(router);
         uniswapFactory = IUniswapV2Factory(factory);
         weth = IWETH(_weth);
@@ -38,14 +33,8 @@ contract MyDex {
         path[0] = uniswapRouter.WETH();
         path[1] = address(rntToken);
 
-        uniswapRouter.swapExactETHForTokens{value: msg.value}(
-            0,
-            path,
-            msg.sender,
-            block.timestamp + 1000
-        );
+        uniswapRouter.swapExactETHForTokens{value: msg.value}(0, path, msg.sender, block.timestamp + 1000);
     }
-
 
     function swapRNTForETH(uint256 rntAmount) external {
         require(rntToken.transferFrom(msg.sender, address(this), rntAmount), "Transfer failed");
@@ -55,13 +44,7 @@ contract MyDex {
         //当前合约授权给 router
         rntToken.approve(address(uniswapRouter), rntAmount);
 
-        uniswapRouter.swapExactTokensForETH(
-            rntAmount,
-            0,
-            path,
-            msg.sender,
-            block.timestamp + 1000
-        );
+        uniswapRouter.swapExactTokensForETH(rntAmount, 0, path, msg.sender, block.timestamp + 1000);
     }
 
     function removeLiquidityETH(
@@ -70,18 +53,12 @@ contract MyDex {
         uint256 amountETHMin,
         address to,
         uint256 deadline
-    ) external returns (uint256 amountToken, uint256 amountETH){
+    ) external returns (uint256 amountToken, uint256 amountETH) {
         address pair = UniswapV2Library.pairFor(address(uniswapFactory), address(rntToken), address(weth));
         IERC20(pair).transferFrom(msg.sender, address(this), liquidity);
         IERC20(pair).approve(address(uniswapRouter), liquidity);
-       
-       return uniswapRouter.removeLiquidityETH(
-            address(rntToken),
-            liquidity,
-            amountTokenMin,
-            amountETHMin,
-            to,
-            deadline
-        );
+
+        return
+            uniswapRouter.removeLiquidityETH(address(rntToken), liquidity, amountTokenMin, amountETHMin, to, deadline);
     }
 }
