@@ -75,7 +75,7 @@ contract FlashSwapArbitrageTest is Test {
         assertEq(address(liquidityUser1).balance, EthAmount);
         // 给发送者添加 rnt代币
         AToken.transfer(liquidityUser1, TokenAmount);
-        AToken.transfer(address(flashSwap), TokenAmount);
+        AToken.transfer(address(flashSwap), TokenAmount);//给合约加钱，保证可以正常还款，不至于还款失败
         BToken.transfer(liquidityUser1, TokenAmount);
         AToken.transfer(user2Address, 10000000000);
         BToken.transfer(user2Address, 10000000000);
